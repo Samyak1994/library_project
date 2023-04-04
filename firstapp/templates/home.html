@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>  Welcome to Library </title>
+        
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    </head>
+
+    <body>
+        <h1>Library application</h1>
+
+        <form action="{% url 'home_page' %}"  method="post">
+            {% csrf_token %}
+
+            {% if single_book %}
+                Book ID :- <input type="number" name="book_id" value="{{single_book.id}}" readonly><br><br>
+            {% endif %}
+            Name :- <input type="text" name="book_name" value="{{single_book.name}}"><br><br>
+            Quantity :- <input type="number" name="book_qty" value="{{single_book.qty}}"><br><br>
+            Price :- <input type="number" name="book_price" value="{{single_book.price}}" ><br><br>
+            Author :- <input type="text" name="book_author"  value="{{single_book.author}}" ><br><br>
+            <!-- Is Published :- Yes <input type="radio" name="book_is_published" value="Yes" > No <input type="radio" name="book_is_published" value="No"><br><br> -->
+            {% if single_book %}
+                {% if single_book.is_published == True %}
+                    Is Published = Yes <input type="radio" name="book_is_published" value="Yes" checked> No <input type="radio" name="book_is_published" value="No"><br><br>
+                {% else %}
+                    Is Published = Yes <input type="radio" name="book_is_published" value="Yes"> No <input type="radio" name="book_is_published" value="No" checked><br><br>
+                {% endif %}
+            {% else %}                
+                Is Published = Yes <input type="radio" name="book_is_published" value="Yes">  No <input type="radio" name="book_is_published" value="No"><br><br>
+            {% endif %}
+
+
+            <input type="submit" value="SUBMIT"><br>
+            {% for book in all_book %}
+                {{book}}
+            {%  endfor   %}
+        </form> 
+
+
+        <!-- <a href="/books/"> Show Books </a> -->
+        <a href="{% url 'all_active_book' %}"> active-Books </a>
+        <a href="{% url 'inactive_book' %}"> Show inactive Books </a>
+        
+    
+    </body>
+
+
+</html>
